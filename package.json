@@ -20,6 +20,8 @@
   "files": [
     "bin",
     "lib",
+    "test",
+    "scripts",
     "cordis.patch.yml",
     "README.md",
     "CHANGELOG.md",
@@ -29,7 +31,8 @@
     "test": "node --test test/*.test.mjs",
     "coverage": "node --test --experimental-test-coverage test/*.test.mjs",
     "smoke": "node scripts/smoke.mjs",
-    "fixtures": "node test/fixtures/build-fixtures.mjs"
+    "fixtures": "node test/fixtures/build-fixtures.mjs",
+    "coverage:check": "node scripts/check-coverage.mjs"
   },
   "dependencies": {},
   "dsh": {

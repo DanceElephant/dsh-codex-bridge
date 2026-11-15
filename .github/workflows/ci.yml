@@ -36,8 +36,8 @@ jobs:
       - name: 跑测试
         run: npm test
 
-      - name: 行覆盖率 ≥ 85%
-        run: npm run coverage
+      - name: 行覆盖率 ≥ 85%（不足则失败）
+        run: npm run coverage:check
 
       - name: 生成 fixtures（确保生成器可用）
         run: npm run fixtures
