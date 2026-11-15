@@ -22,6 +22,16 @@ cd ~/.dsh/profiles/<你的 profile>
 npm i /path/to/dsh-codex-bridge-0.1.0.tgz
 ```
 
+如果 profile 里已装的插件之间存在 peer 依赖冲突（例如 `dsh-univer-office` 与 `@perrylink/dsh-github`
+对 `@deepseek-ai/dsh-llm` 的版本要求不一致），`npm i` 会报 `ERESOLVE`。这是 profile 既有问题，
+与本插件无关（本插件零依赖、无 peer 要求），可以加 `--legacy-peer-deps` 安装：
+
+```bash
+npm i /path/to/dsh-codex-bridge-0.1.0.tgz --legacy-peer-deps
+```
+
+装完需要**重启 DSH**，bundle 才会被加载。
+
 然后在该 profile 的 `cordis.patch.yml` 里追加（`dsh.profile.bundles` 也需加上 `"dsh-codex-bridge"`）：
 
 ```yaml
