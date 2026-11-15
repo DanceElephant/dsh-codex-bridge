@@ -36,7 +36,12 @@ jobs:
       - name: 跑测试
         run: npm test
 
-      - name: 行覆盖率 ≥ 85%（不足则失败）
+      - name: 覆盖率报告
+        if: matrix.node != '24'
+        run: npm run coverage
+
+      - name: lib/ 行覆盖率 ≥ 85%（不足则失败，仅在 Node 24 上跑）
+        if: matrix.node == '24'
         run: npm run coverage:check
 
       - name: 生成 fixtures（确保生成器可用）
