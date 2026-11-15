@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        node: ['20', '22', '24']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: 零运行时依赖
+        run: |
+          npm ls --omit=dev
+          test -z "$(npm ls --omit=dev --parseable --depth=0 2>/dev/null | tail -n +2)"
+
+      - name: 跑测试
+        run: npm test
+
+      - name: 行覆盖率 ≥ 85%
+        run: npm run coverage
+
+      - name: 生成 fixtures（确保生成器可用）
+        run: npm run fixtures
+
+      - name: CLI 冒烟（合成 root）
+        run: |
+          ROOT="$RUNNER_TEMP/codex"
+          rm -rf "$ROOT"
+          node test/fixtures/build-fixtures.mjs "$ROOT"
+          node bin/bridge.mjs scan --root "$ROOT" --json | tee scan.json
+          node -e "const d=require('./scan.json'); if (!(d.total>=5)) { console.error('total 过小', d.total); process.exit(1) }"
+          node bin/bridge.mjs import playwright-like --root "$ROOT" --target "$RUNNER_TEMP/t" --dry-run
+          node bin/bridge.mjs import playwright-like --root "$ROOT" --target "$RUNNER_TEMP/t" --yes
+          node bin/bridge.mjs list --target "$RUNNER_TEMP/t" --json
+          node bin/bridge.mjs doctor --root "$ROOT" --target "$RUNNER_TEMP/t"
+          node bin/bridge.mjs remove playwright-like --target "$RUNNER_TEMP/t" --purge

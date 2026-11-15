@@ -1,0 +1,19 @@
+# dsh-codex-bridge：把本机 Codex 技能/插件资产导入 DSH 技能体系。
+#
+# 安装即注册：
+#   1. 6 个工具：codex_scan / codex_inspect / codex_import / codex_list / codex_remove / codex_doctor
+#   2. 启动重放：锁文件里的技能自动重新注册（上游被删只告警，不影响启动）
+#
+# 插件自带空配置，启动绝不崩。可选配置：
+#
+#   - id: dsh-codex-bridge
+#     config:
+#       codexRoot: ~/.codex          # 可选：Codex 根目录，默认 ~/.codex
+#       targetDir: ~/.dsh/codex-bridge  # 可选：锁文件与 snapshot 快照目录
+#       maxDescription: 220          # 可选：技能描述硬上限（Unicode 码点）
+#       autoReplay: true             # 可选：apply 时重放锁文件技能，默认 true
+#
+- insert:
+    - id: dsh-codex-bridge
+      name: dsh-codex-bridge
+      config: {}
