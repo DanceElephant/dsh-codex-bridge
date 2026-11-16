@@ -2,6 +2,20 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 与 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [0.1.2] - 2026-11-16
+
+### 新增
+
+- **`autoReplay` 真正生效**：`config.autoReplay: false` 时启动只注册 6 个工具、跳过锁文件重放——工具照常可用（`codex_list` 仍能看到已导入项，锁文件不删），但本次启动不往会话里注入技能，方便排查「某条技能到底影响了我什么」。默认仍为 `true`。
+
+### 变更
+
+- **文档**：README 重写为中文主描述，顶部可切换英文版（新增 `README.en.md`），并按 `package.json` 的 `files` 纳入发布包。
+
+### 修复
+
+- `autoReplay` 此前只写在文档与 bundle 注释里、代码从未读取；现在两者一致，并新增 2 条测试覆盖「开关生效」与「默认值」。
+
 ## [0.1.1] - 2026-11-16
 
 ### 变更
@@ -32,5 +46,6 @@
 
 - 只读 `codexRoot` 内文件（含 realpath 校验），只写 `targetDir` 内文件；不执行被导入的脚本、不联网、不上传任何数据。
 
+[0.1.2]: https://github.com/DanceElephant/dsh-codex-bridge/releases/tag/v0.1.2
 [0.1.1]: https://github.com/DanceElephant/dsh-codex-bridge/releases/tag/v0.1.1
 [0.1.0]: https://github.com/DanceElephant/dsh-codex-bridge/releases/tag/v0.1.0

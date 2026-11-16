@@ -1,6 +1,6 @@
 {
   "name": "dsh-codex-bridge",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Import local Codex skills and plugin skills into DeepSeek Harness without executing them: reference or snapshot registration, description compression, atomic lockfile, 6 tools + CLI.",
   "type": "module",
   "license": "MIT",
@@ -24,6 +24,7 @@
     "scripts",
     "cordis.patch.yml",
     "README.md",
+    "README.en.md",
     "CHANGELOG.md",
     "LICENSE"
   ],

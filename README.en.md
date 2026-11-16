@@ -120,7 +120,7 @@ The plugin is a DSH **bundle**: install it into a profile, then restart DSH.
 ### Option 1 — one command (recommended)
 
 ```bash
-dsh plugin add https://github.com/DanceElephant/dsh-codex-bridge/releases/download/v0.1.1/dsh-codex-bridge-0.1.1.tgz
+dsh plugin add https://github.com/DanceElephant/dsh-codex-bridge/releases/download/v0.1.2/dsh-codex-bridge-0.1.2.tgz
 ```
 
 Restart DSH afterwards. This writes the package into the profile's `dependencies` and `dsh.profile.bundles`; no manual registration.
@@ -133,10 +133,10 @@ The plugin has been submitted to the [DSH plugin market](https://awesome-dsh-plu
 
 ```bash
 cd /path/to/dsh-codex-bridge
-npm pack                                   # produces dsh-codex-bridge-0.1.1.tgz
+npm pack                                   # produces dsh-codex-bridge-0.1.2.tgz
 
 cd ~/.dsh/profiles/<your profile>
-npm i /path/to/dsh-codex-bridge-0.1.1.tgz
+npm i /path/to/dsh-codex-bridge-0.1.2.tgz
 ```
 
 If plugins already in the profile have peer conflicts (for example `dsh-univer-office` and `@perrylink/dsh-github` disagreeing about `@deepseek-ai/dsh-llm`), `npm i` reports `ERESOLVE`. That is a pre-existing profile problem, unrelated to this plugin (zero dependencies, no peers); add `--legacy-peer-deps` to get past it.
@@ -311,6 +311,7 @@ Writes are atomic: temp file `0600` → `fsync` → `rename`. A batch that fails
 | `codexRoot` | `~/.codex` | Read-only Codex root |
 | `targetDir` | `~/.dsh/codex-bridge` | Lockfile and snapshot location |
 | `maxDescription` | `220` | Description budget injected into DSH (Unicode code points) |
+| `autoReplay` | `true` | Replay lockfile skills on startup. `false` registers only the tools and never injects skills (the lockfile is left untouched) |
 
 An empty config is fine, and a broken config **cannot stop DSH from booting**: each phase is wrapped, failures only log a `[codex-bridge]` warning.
 
@@ -345,7 +346,6 @@ An empty config is fine, and a broken config **cannot stop DSH from booting**: e
 - `snapshot` rewrites only the five path spellings above; other hard-coded absolute paths are left alone;
 - compression is heuristic: a very long description with no trigger sentence is cut at a clause boundary;
 - with several plugin versions present, the highest version wins (`1.10.0 > 1.2.3`); hash-like directories sort last;
-- **`autoReplay` is not implemented**: earlier docs mentioned the switch, but the current behaviour is "always replay on startup". To stop injecting temporarily, use `codex_remove` or uninstall the plugin.
 
 ## Development
 

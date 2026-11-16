@@ -120,7 +120,7 @@ flowchart LR
 ### 方式一：一行命令（推荐）
 
 ```bash
-dsh plugin add https://github.com/DanceElephant/dsh-codex-bridge/releases/download/v0.1.1/dsh-codex-bridge-0.1.1.tgz
+dsh plugin add https://github.com/DanceElephant/dsh-codex-bridge/releases/download/v0.1.2/dsh-codex-bridge-0.1.2.tgz
 ```
 
 然后重启 DSH。这一步会把包写进 profile 的 `dependencies` 和 `dsh.profile.bundles`，注册不需要你手改配置。
@@ -133,10 +133,10 @@ dsh plugin add https://github.com/DanceElephant/dsh-codex-bridge/releases/downlo
 
 ```bash
 cd /path/to/dsh-codex-bridge
-npm pack                                   # 生成 dsh-codex-bridge-0.1.1.tgz
+npm pack                                   # 生成 dsh-codex-bridge-0.1.2.tgz
 
 cd ~/.dsh/profiles/<你的 profile>
-npm i /path/to/dsh-codex-bridge-0.1.1.tgz
+npm i /path/to/dsh-codex-bridge-0.1.2.tgz
 ```
 
 如果 profile 里已有插件之间存在 peer 冲突（例如 `dsh-univer-office` 与 `@perrylink/dsh-github`
@@ -342,6 +342,7 @@ bridge doctor                                # 体检（缺失二进制 / 失效
 | `codexRoot` | `~/.codex` | 只读的 Codex 根目录 |
 | `targetDir` | `~/.dsh/codex-bridge` | 锁文件与 snapshot 副本的存放处 |
 | `maxDescription` | `220` | 注入 DSH 的描述预算（按 Unicode 码点计） |
+| `autoReplay` | `true` | 启动时是否重放锁文件里的导入项。设 `false` 则只注册工具、不注入技能（锁文件原样保留） |
 
 插件自带空配置，配置写错也**不会让 DSH 启动失败**——每个阶段独立 try/catch，出错只打一条 `[codex-bridge]` 警告。
 
@@ -383,7 +384,6 @@ bridge doctor                                # 体检（缺失二进制 / 失效
 - snapshot 只改写上面那 5 种路径写法，硬编码的其他绝对路径不会改；
 - 描述压缩是启发式的：没有触发句的超长描述会被截到子句边界；
 - 多版本插件目录选版本号最大者（`1.10.0 > 1.2.3`），hash 形态的目录排最后；
-- **`autoReplay` 尚未实现**：早期文档提到过这个开关，但当前实现是「启动总是重放」。需要「临时不注入」时请用 `codex_remove` 或干脆卸载插件。
 
 ## 开发与测试
 

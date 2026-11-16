@@ -243,6 +243,35 @@ test('同一 ctx 上 dispose 事件注册不抛', (t) => {
   })
 })
 
+test('autoReplay: false —— 只注册工具，不注入锁文件里的技能', async (t) => {
+  const { root, targetDir } = imported(t, 'no-replay', ['agent-reach-like'])
+  const { ctx, tools, skills } = createMockContext()
+
+  const summary = bridge.apply(ctx, { codexRoot: root, targetDir, autoReplay: false })
+
+  assert.equal(tools.size, 6)
+  assert.equal(skills.size, 0)
+  assert.equal(summary.skills, 0)
+  // 锁文件保持原样，工具仍能看到这条导入（关掉的是「注入」，不是「记录」）
+  assert.equal(readLock(targetDir).lock.imports.length, 1)
+  const list = await tools.get('codex_list').execute({})
+  assert.equal(list.total, 1)
+})
+
+test('autoReplay 默认开启，显式 true 同样重放', (t) => {
+  const { root, targetDir } = imported(t, 'replay-default', ['agent-reach-like'])
+  const configs = [
+    { codexRoot: root, targetDir },
+    { codexRoot: root, targetDir, autoReplay: true },
+  ]
+  for (const config of configs) {
+    const { ctx, skills } = createMockContext()
+    const summary = bridge.apply(ctx, config)
+    assert.equal(skills.size, 1)
+    assert.equal(summary.skills, 1)
+  }
+})
+
 test('cordis.patch.yml 指向本包且 id 正确', () => {
   const text = readFileSync(new URL('../cordis.patch.yml', import.meta.url), 'utf8')
   assert.ok(text.includes('id: dsh-codex-bridge'))
