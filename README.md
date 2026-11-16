@@ -13,13 +13,24 @@ Codex 与 DSH 的技能格式几乎一样（都是带 YAML frontmatter 的 `SKIL
 
 ## 安装
 
-### 作为 DSH bundle（推荐）
+### 从插件市场安装（推荐）
+
+DSH 的**插件市场**（`dshmarket`）已收录本插件，在市场的「工具 / 技能」分类里点安装即可。
+也可以直接交给 CLI：
+
+```bash
+dsh plugin add https://github.com/DanceElephant/dsh-codex-bridge/releases/download/v0.1.1/dsh-codex-bridge-0.1.1.tgz
+```
+
+装完重启 DSH。
+
+### 手工装进 profile
 
 ```bash
 cd /path/to/dsh-codex-bridge
-npm pack                                   # 生成 dsh-codex-bridge-0.1.0.tgz
+npm pack                                   # 生成 dsh-codex-bridge-0.1.1.tgz
 cd ~/.dsh/profiles/<你的 profile>
-npm i /path/to/dsh-codex-bridge-0.1.0.tgz
+npm i /path/to/dsh-codex-bridge-0.1.1.tgz
 ```
 
 如果 profile 里已装的插件之间存在 peer 依赖冲突（例如 `dsh-univer-office` 与 `@perrylink/dsh-github`
@@ -27,7 +38,7 @@ npm i /path/to/dsh-codex-bridge-0.1.0.tgz
 与本插件无关（本插件零依赖、无 peer 要求），可以加 `--legacy-peer-deps` 安装：
 
 ```bash
-npm i /path/to/dsh-codex-bridge-0.1.0.tgz --legacy-peer-deps
+npm i /path/to/dsh-codex-bridge-0.1.1.tgz --legacy-peer-deps
 ```
 
 装完需要**重启 DSH**，bundle 才会被加载。

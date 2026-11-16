@@ -2,6 +2,18 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 与 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [0.1.1] - 2026-11-16
+
+### 变更
+
+- **安装方式**：把「插件市场 / `dsh plugin add <release tarball>`」的一行安装写到首位，手工 `npm i` 到 profile 降为备选路径。
+- **文档**：说明 profile 里既有插件之间的 peer 冲突（`ERESOLVE`）与本插件无关（零依赖、无 peer 要求），可用 `--legacy-peer-deps` 绕过；并说明装完需重启 DSH。
+
+### 其他
+
+- 发布 `dsh-codex-bridge-0.1.1.tgz` 到 GitHub Release，供 DSH 插件市场条目与离线安装使用。
+- 仓库添加 `dsh-plugin` topic，便于市场收录与检索。
+
 ## [0.1.0] - 2026-11-15
 
 ### 新增
@@ -20,4 +32,5 @@
 
 - 只读 `codexRoot` 内文件（含 realpath 校验），只写 `targetDir` 内文件；不执行被导入的脚本、不联网、不上传任何数据。
 
+[0.1.1]: https://github.com/DanceElephant/dsh-codex-bridge/releases/tag/v0.1.1
 [0.1.0]: https://github.com/DanceElephant/dsh-codex-bridge/releases/tag/v0.1.0
