@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * dsh-codex-bridge CLI —— 核心逻辑都在 lib/，这里只做参数解析与输出。
+ * dsh-codex-skill-bridge CLI —— 核心逻辑都在 lib/，这里只做参数解析与输出。
  *
  * 退出码：0 全成功 / 1 用法错误 / 2 执行失败或部分失败。
  */
@@ -17,7 +17,7 @@ import { resolveTargetDir } from '../lib/paths.mjs'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 
-const USAGE = `dsh-codex-bridge —— 把本机 Codex 技能导入 DSH 技能体系
+const USAGE = `dsh-codex-skill-bridge —— 把本机 Codex 技能导入 DSH 技能体系
 
 用法：
   bridge scan    [--root DIR] [--target DIR] [--json]
@@ -32,7 +32,7 @@ const USAGE = `dsh-codex-bridge —— 把本机 Codex 技能导入 DSH 技能�
 
 选项：
   --root DIR       Codex 根目录，默认 ~/.codex
-  --target DIR     导入目标目录，默认 ~/.dsh/codex-bridge
+  --target DIR     导入目标目录，默认 ~/.dsh/codex-skill-bridge
   --mode MODE      reference（默认，不复制文件）| snapshot（复制并改写 CODEX_HOME）
   --on-conflict    重名策略：prefix（默认）| skip | overwrite
   --dry-run        只打印计划，不写任何文件
@@ -169,7 +169,7 @@ function cmdScan(flags) {
     return 0
   }
   const widths = [22, 24, 6]
-  const lines = [`codex-bridge scan`, `root: ${scan.root}`, `target: ${targetDir}`, '']
+  const lines = [`codex-skill-bridge scan`, `root: ${scan.root}`, `target: ${targetDir}`, '']
   lines.push(`${pad('技能', widths[0])} ${pad('类型', widths[1])} ${pad('文件', widths[2])} 描述`)
   for (const item of items) {
     const kind = item.kind === 'plugin' ? `plugin/${item.pluginName}` : 'standalone'
@@ -341,7 +341,7 @@ function cmdDoctor(flags) {
   }
   const list = (values) => (values.length === 0 ? '(无)' : values.join(', '))
   const lines = [
-    'codex-bridge doctor',
+    'codex-skill-bridge doctor',
     `root: ${data.root}`,
     `target: ${data.targetDir}`,
     `node: ${data.nodeVersion}  platform: ${data.platform}`,

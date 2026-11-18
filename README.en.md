@@ -4,14 +4,14 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/DanceElephant/dsh-codex-bridge/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/DanceElephant/dsh-codex-bridge/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/DanceElephant/dsh-codex-skill-bridge/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/DanceElephant/dsh-codex-skill-bridge/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="node" src="https://img.shields.io/badge/node-%E2%89%A520-339933?style=flat-square">
   <img alt="runtime deps" src="https://img.shields.io/badge/runtime%20deps-0-brightgreen?style=flat-square">
-  <a href="https://github.com/DanceElephant/dsh-codex-bridge/releases"><img alt="release" src="https://img.shields.io/github/v/release/DanceElephant/dsh-codex-bridge?style=flat-square"></a>
-  <img alt="license" src="https://img.shields.io/github/license/DanceElephant/dsh-codex-bridge?style=flat-square">
+  <a href="https://github.com/DanceElephant/dsh-codex-skill-bridge/releases"><img alt="release" src="https://img.shields.io/github/v/release/DanceElephant/dsh-codex-skill-bridge?style=flat-square"></a>
+  <img alt="license" src="https://img.shields.io/github/license/DanceElephant/dsh-codex-skill-bridge?style=flat-square">
 </p>
 
-<h1 align="center">dsh-codex-bridge</h1>
+<h1 align="center">dsh-codex-skill-bridge</h1>
 
 <p align="center">
   Move the skills you already have in Codex into DeepSeek Harness in one command.<br>
@@ -120,23 +120,23 @@ The plugin is a DSH **bundle**: install it into a profile, then restart DSH.
 ### Option 1 — one command (recommended)
 
 ```bash
-dsh plugin add https://github.com/DanceElephant/dsh-codex-bridge/releases/download/v0.1.2/dsh-codex-bridge-0.1.2.tgz
+dsh plugin add https://github.com/DanceElephant/dsh-codex-skill-bridge/releases/download/v0.2.0/dsh-codex-skill-bridge-0.2.0.tgz
 ```
 
 Restart DSH afterwards. This writes the package into the profile's `dependencies` and `dsh.profile.bundles`; no manual registration.
 
 ### Option 2 — plugin market
 
-The plugin has been submitted to the [DSH plugin market](https://awesome-dsh-plugin.com) (entry PR [#15734](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/15734)). Once merged, search `codex-bridge` under the skill category and click install. **Before the merge, use option 1.**
+The plugin is submitted to the [DSH plugin market](https://awesome-dsh-plugin.com) under the skill category (search `codex-skill-bridge`). Until that entry is merged, use option 1.
 
 ### Option 3 — manual install into a profile
 
 ```bash
-cd /path/to/dsh-codex-bridge
-npm pack                                   # produces dsh-codex-bridge-0.1.2.tgz
+cd /path/to/dsh-codex-skill-bridge
+npm pack                                   # produces dsh-codex-skill-bridge-0.2.0.tgz
 
 cd ~/.dsh/profiles/<your profile>
-npm i /path/to/dsh-codex-bridge-0.1.2.tgz
+npm i /path/to/dsh-codex-skill-bridge-0.2.0.tgz
 ```
 
 If plugins already in the profile have peer conflicts (for example `dsh-univer-office` and `@perrylink/dsh-github` disagreeing about `@deepseek-ai/dsh-llm`), `npm i` reports `ERESOLVE`. That is a pre-existing profile problem, unrelated to this plugin (zero dependencies, no peers); add `--legacy-peer-deps` to get past it.
@@ -145,12 +145,12 @@ Then append to that profile's `cordis.patch.yml`:
 
 ```yaml
 - insert:
-    - id: dsh-codex-bridge
-      name: dsh-codex-bridge
+    - id: dsh-codex-skill-bridge
+      name: dsh-codex-skill-bridge
       config: {}
 ```
 
-Make sure `dsh.profile.bundles` in the profile's `package.json` contains `"dsh-codex-bridge"`, then restart DSH.
+Make sure `dsh.profile.bundles` in the profile's `package.json` contains `"dsh-codex-skill-bridge"`, then restart DSH.
 
 ### CLI only, no bundle
 
@@ -217,7 +217,7 @@ codex_remove({ "names": ["playwright"], "purge": false })
 
 | | `reference` (default) | `snapshot` |
 | --- | --- | --- |
-| Where files live | Not copied; the lockfile stores `sourcePath` | Copied to `~/.dsh/codex-bridge/<skill-name>/` |
+| Where files live | Not copied; the lockfile stores `sourcePath` | Copied to `~/.dsh/codex-skill-bridge/<skill-name>/` |
 | Upstream edits | Body reflects the new version on next startup | Requires re-import |
 | Upstream deleted | Warned and skipped at startup | Copy still works |
 | Best for | Most skills (no hard-coded paths) | Bodies containing `${CODEX_HOME:-$HOME/.codex}/skills/<name>` and friends |
@@ -287,7 +287,7 @@ bridge doctor  [--fix] [--root DIR] [--target DIR] [--json]
     ├── .codex-plugin/plugin.json
     └── skills/<name>/SKILL.md
 
-~/.dsh/codex-bridge/                       # targetDir: the only writable location
+~/.dsh/codex-skill-bridge/                       # targetDir: the only writable location
 ├── .bridge.json                           #   lockfile (version 1, mode 0600)
 └── <skill-name>/                          #   snapshot copies only
 ```
@@ -300,8 +300,8 @@ Writes are atomic: temp file `0600` → `fsync` → `rename`. A batch that fails
 
 ```yaml
 - insert:
-    - id: dsh-codex-bridge
-      name: dsh-codex-bridge
+    - id: dsh-codex-skill-bridge
+      name: dsh-codex-skill-bridge
       config:
         maxDescription: 220
 ```
@@ -309,11 +309,11 @@ Writes are atomic: temp file `0600` → `fsync` → `rename`. A batch that fails
 | Field | Default | Meaning |
 | --- | --- | --- |
 | `codexRoot` | `~/.codex` | Read-only Codex root |
-| `targetDir` | `~/.dsh/codex-bridge` | Lockfile and snapshot location |
+| `targetDir` | `~/.dsh/codex-skill-bridge` | Lockfile and snapshot location |
 | `maxDescription` | `220` | Description budget injected into DSH (Unicode code points) |
 | `autoReplay` | `true` | Replay lockfile skills on startup. `false` registers only the tools and never injects skills (the lockfile is left untouched) |
 
-An empty config is fine, and a broken config **cannot stop DSH from booting**: each phase is wrapped, failures only log a `[codex-bridge]` warning.
+An empty config is fine, and a broken config **cannot stop DSH from booting**: each phase is wrapped, failures only log a `[codex-skill-bridge]` warning.
 
 ## Safety boundaries
 
@@ -329,7 +329,7 @@ An empty config is fine, and a broken config **cannot stop DSH from booting**: e
 
 **A plugin I installed does not show up** — plugins with only MCP configuration produce no skill entries. They are reported in `problems[]` as `MCP_ONLY`; a plugin with a manifest but no `skills/` is `NO_SKILLS`. "Nothing to import" and "plugin missing" are deliberately different answers.
 
-**Imported, but no skill in DSH** — replay happens at startup: **restart DSH**. If it is still absent, run `codex_doctor` and check `replayable` (over-budget descriptions or a deleted `SKILL.md` cause a skip; the log carries a `[codex-bridge]` warning).
+**Imported, but no skill in DSH** — replay happens at startup: **restart DSH**. If it is still absent, run `codex_doctor` and check `replayable` (over-budget descriptions or a deleted `SKILL.md` cause a skip; the log carries a `[codex-skill-bridge]` warning).
 
 **The skill name changed** — the default conflict policy is `prefix`, so the new name is `codex-<original>`. Use `onConflict: "overwrite"` or remove the old entry first.
 

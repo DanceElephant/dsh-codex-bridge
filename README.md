@@ -4,14 +4,14 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/DanceElephant/dsh-codex-bridge/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/DanceElephant/dsh-codex-bridge/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/DanceElephant/dsh-codex-skill-bridge/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/DanceElephant/dsh-codex-skill-bridge/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="node" src="https://img.shields.io/badge/node-%E2%89%A520-339933?style=flat-square">
   <img alt="runtime deps" src="https://img.shields.io/badge/runtime%20deps-0-brightgreen?style=flat-square">
-  <a href="https://github.com/DanceElephant/dsh-codex-bridge/releases"><img alt="release" src="https://img.shields.io/github/v/release/DanceElephant/dsh-codex-bridge?style=flat-square"></a>
-  <img alt="license" src="https://img.shields.io/github/license/DanceElephant/dsh-codex-bridge?style=flat-square">
+  <a href="https://github.com/DanceElephant/dsh-codex-skill-bridge/releases"><img alt="release" src="https://img.shields.io/github/v/release/DanceElephant/dsh-codex-skill-bridge?style=flat-square"></a>
+  <img alt="license" src="https://img.shields.io/github/license/DanceElephant/dsh-codex-skill-bridge?style=flat-square">
 </p>
 
-<h1 align="center">dsh-codex-bridge</h1>
+<h1 align="center">dsh-codex-skill-bridge</h1>
 
 <p align="center">
   把本机 Codex 的技能，一条命令搬进 DeepSeek Harness。<br>
@@ -120,23 +120,23 @@ flowchart LR
 ### 方式一：一行命令（推荐）
 
 ```bash
-dsh plugin add https://github.com/DanceElephant/dsh-codex-bridge/releases/download/v0.1.2/dsh-codex-bridge-0.1.2.tgz
+dsh plugin add https://github.com/DanceElephant/dsh-codex-skill-bridge/releases/download/v0.2.0/dsh-codex-skill-bridge-0.2.0.tgz
 ```
 
 然后重启 DSH。这一步会把包写进 profile 的 `dependencies` 和 `dsh.profile.bundles`，注册不需要你手改配置。
 
 ### 方式二：插件市场
 
-本插件已提交到 [DSH 插件市场](https://awesome-dsh-plugin.com)（条目 PR [#15734](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/15734)）。合并之后，在市场的「技能」分类里搜 `codex-bridge` 点安装即可；**合并前请用方式一**。
+本插件已在 [DSH 插件市场](https://awesome-dsh-plugin.com) 提交条目（分类：技能，搜索 `codex-skill-bridge`）。条目合并前，请用方式一的一行命令安装。
 
 ### 方式三：手工装进 profile
 
 ```bash
-cd /path/to/dsh-codex-bridge
-npm pack                                   # 生成 dsh-codex-bridge-0.1.2.tgz
+cd /path/to/dsh-codex-skill-bridge
+npm pack                                   # 生成 dsh-codex-skill-bridge-0.2.0.tgz
 
 cd ~/.dsh/profiles/<你的 profile>
-npm i /path/to/dsh-codex-bridge-0.1.2.tgz
+npm i /path/to/dsh-codex-skill-bridge-0.2.0.tgz
 ```
 
 如果 profile 里已有插件之间存在 peer 冲突（例如 `dsh-univer-office` 与 `@perrylink/dsh-github`
@@ -147,12 +147,12 @@ npm i /path/to/dsh-codex-bridge-0.1.2.tgz
 
 ```yaml
 - insert:
-    - id: dsh-codex-bridge
-      name: dsh-codex-bridge
+    - id: dsh-codex-skill-bridge
+      name: dsh-codex-skill-bridge
       config: {}
 ```
 
-并确认 profile 的 `package.json` 里 `dsh.profile.bundles` 含 `"dsh-codex-bridge"`，然后重启 DSH。
+并确认 profile 的 `package.json` 里 `dsh.profile.bundles` 含 `"dsh-codex-skill-bridge"`，然后重启 DSH。
 
 ### 只用 CLI，不装 bundle
 
@@ -223,7 +223,7 @@ codex_remove({ "names": ["playwright"], "purge": false })   // 注销
 
 | | `reference`（默认） | `snapshot` |
 | --- | --- | --- |
-| 技能文件放哪 | 不复制，锁文件记 `sourcePath` 指向上游 | 复制到 `~/.dsh/codex-bridge/<skill-name>/` |
+| 技能文件放哪 | 不复制，锁文件记 `sourcePath` 指向上游 | 复制到 `~/.dsh/codex-skill-bridge/<skill-name>/` |
 | 上游改动 | 下次启动正文即为新版 | 要重新导入才更新 |
 | 上游被删 | 启动时告警并跳过该条 | 副本仍在，照常可用 |
 | 适合 | 绝大多数技能（不写死路径） | 正文里带 `${CODEX_HOME:-$HOME/.codex}/skills/<name>` 这类硬编码 |
@@ -306,7 +306,7 @@ bridge doctor                                # 体检（缺失二进制 / 失效
     ├── .codex-plugin/plugin.json
     └── skills/<name>/SKILL.md
 
-~/.dsh/codex-bridge/                       # targetDir：唯一写入位置
+~/.dsh/codex-skill-bridge/                       # targetDir：唯一写入位置
 ├── .bridge.json                           #   锁文件（版本 1，权限 0600）
 └── <skill-name>/                          #   仅 snapshot 模式：副本
 ```
@@ -331,8 +331,8 @@ bridge doctor                                # 体检（缺失二进制 / 失效
 
 ```yaml
 - insert:
-    - id: dsh-codex-bridge
-      name: dsh-codex-bridge
+    - id: dsh-codex-skill-bridge
+      name: dsh-codex-skill-bridge
       config:
         maxDescription: 220
 ```
@@ -340,11 +340,11 @@ bridge doctor                                # 体检（缺失二进制 / 失效
 | 字段 | 默认 | 说明 |
 | --- | --- | --- |
 | `codexRoot` | `~/.codex` | 只读的 Codex 根目录 |
-| `targetDir` | `~/.dsh/codex-bridge` | 锁文件与 snapshot 副本的存放处 |
+| `targetDir` | `~/.dsh/codex-skill-bridge` | 锁文件与 snapshot 副本的存放处 |
 | `maxDescription` | `220` | 注入 DSH 的描述预算（按 Unicode 码点计） |
 | `autoReplay` | `true` | 启动时是否重放锁文件里的导入项。设 `false` 则只注册工具、不注入技能（锁文件原样保留） |
 
-插件自带空配置，配置写错也**不会让 DSH 启动失败**——每个阶段独立 try/catch，出错只打一条 `[codex-bridge]` 警告。
+插件自带空配置，配置写错也**不会让 DSH 启动失败**——每个阶段独立 try/catch，出错只打一条 `[codex-skill-bridge]` 警告。
 
 ## 安全边界
 
@@ -363,7 +363,7 @@ bridge doctor                                # 体检（缺失二进制 / 失效
 只有 MCP 配置、没有 `skills/` 的插件不会产生技能条目，扫描会把它记在 `problems[]` 里，码是 `MCP_ONLY`；有清单但没 `skills/` 是 `NO_SKILLS`。这是设计如此：「没有技能可导」和「插件不存在」是两件事。
 
 **导入成功了，DSH 里没看到技能**
-重放只在启动时发生——**重启 DSH**。若仍没有，跑 `codex_doctor`，看条目是否 `replayable`（描述超预算、`SKILL.md` 被删都会导致跳过，日志里有 `[codex-bridge]` 警告）。
+重放只在启动时发生——**重启 DSH**。若仍没有，跑 `codex_doctor`，看条目是否 `replayable`（描述超预算、`SKILL.md` 被删都会导致跳过，日志里有 `[codex-skill-bridge]` 警告）。
 
 **技能名被改了**
 撞名时默认策略是 `prefix`，新名字是 `codex-<原名>`。想保留原名就用 `onConflict: "overwrite"` 或先 `codex_remove` 旧的。

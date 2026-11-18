@@ -274,7 +274,7 @@ test('autoReplay 默认开启，显式 true 同样重放', (t) => {
 
 test('cordis.patch.yml 指向本包且 id 正确', () => {
   const text = readFileSync(new URL('../cordis.patch.yml', import.meta.url), 'utf8')
-  assert.ok(text.includes('id: dsh-codex-bridge'))
-  assert.ok(text.includes('name: dsh-codex-bridge'))
+  assert.ok(text.includes('id: dsh-codex-skill-bridge'))
+  assert.ok(text.includes('name: dsh-codex-skill-bridge'))
   assert.ok(text.includes('- insert:'))
 })

@@ -1,6 +1,6 @@
 {
-  "name": "dsh-codex-bridge",
-  "version": "0.1.2",
+  "name": "dsh-codex-skill-bridge",
+  "version": "0.2.0",
   "description": "Import local Codex skills and plugin skills into DeepSeek Harness without executing them: reference or snapshot registration, description compression, atomic lockfile, 6 tools + CLI.",
   "type": "module",
   "license": "MIT",
@@ -15,7 +15,8 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "bridge": "bin/bridge.mjs"
+    "bridge": "bin/bridge.mjs",
+    "codex-skill-bridge": "bin/bridge.mjs"
   },
   "files": [
     "bin",
@@ -48,5 +49,13 @@
     "skills",
     "plugin",
     "bridge"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanceElephant/dsh-codex-skill-bridge.git"
+  },
+  "homepage": "https://github.com/DanceElephant/dsh-codex-skill-bridge#readme",
+  "bugs": {
+    "url": "https://github.com/DanceElephant/dsh-codex-skill-bridge/issues"
+  }
 }

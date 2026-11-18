@@ -135,8 +135,8 @@ function cycle(targetDir) {
 }
 
 function main() {
-  console.log('dsh-codex-bridge 冒烟测试（真实 ~/.codex）')
-  const base = mkdtempSync(join(tmpdir(), 'codex-bridge-smoke-'))
+  console.log('dsh-codex-skill-bridge 冒烟测试（真实 ~/.codex）')
+  const base = mkdtempSync(join(tmpdir(), 'codex-skill-bridge-smoke-'))
   // 每轮用全新的 targetDir：这样才能验证"dry-run 不创建目录"
   const targets = [join(base, 'bridge-1'), join(base, 'bridge-2')]
   try {

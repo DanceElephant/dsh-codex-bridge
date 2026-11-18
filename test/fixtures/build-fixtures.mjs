@@ -63,7 +63,7 @@ export function buildFixtures(destDir) {
       '# Agent Reach (fixture)',
       '',
       'Collect posts from social platforms, then summarise.',
-      'Scripts are never executed by dsh-codex-bridge.',
+      'Scripts are never executed by dsh-codex-skill-bridge.',
       '',
       '```bash',
       'reach collect --platform xiaohongshu --limit 20',
